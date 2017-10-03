@@ -43,8 +43,8 @@ param(
 
 }
 
-# start emWave, wait a little while for it to fire up, hide it, start our app
+# start emWave, start our app, wait a little for them to fire up, hide emWave
 $emwv = start-process -PassThru "C:\Program Files (x86)\HeartMath\emWave\emwavepc.exe"
+start-process -WindowStyle Maximized -ArgumentList "$($emwv.Id)" "C:\Users\HRVT_7\Documents\Release\emwave_pulse_PC_App.exe"
 Start-Sleep 3
 Set-WindowStyle HIDE $emwv.Id
-start-process -WindowStyle Maximized -ArgumentList "$($emwv.Id)" "C:\Users\HRVT_7\Documents\Release\emwave_pulse_PC_App.exe"
