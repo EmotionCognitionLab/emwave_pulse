@@ -2,14 +2,14 @@
 # If necessary, change the next two lines to set the location
 # of emwave and emwave_pulse.
 $emwv_loc = "$($env:ProgramFiles)\HeartMath\emWave\emwavepc.exe"
-$emwv_pulse_loc = "$($env:USERPROFILE)\Documents\Release\emwave_pulse_PC_App.exe""
+$emwv_pulse_loc = "$($env:USERPROFILE)\Documents\Release\emwave_pulse_PC_App.exe"
 
 
 # Function to maximize/minimize/hide etc. a given window
 # Modified version of https://gist.github.com/jakeballard/11240204
 # Usage: Set-WindowStyle <Style> <ProcessId>
 # Operates on whatever the MainWindowHandle of ProcessId is
-﻿function Set-WindowStyle {
+function Set-WindowStyle {
 param(
     [Parameter()]
     [ValidateSet('FORCEMINIMIZE', 'HIDE', 'MAXIMIZE', 'MINIMIZE', 'RESTORE', 
@@ -21,7 +21,7 @@ param(
     $ProcId,
     
     [Parameter()]
-    $MainWindowHandle = (Get-Process –id $ProcId).MainWindowHandle
+    $MainWindowHandle = (Get-Process -id $ProcId).MainWindowHandle
 )
     $WindowStates = @{
         'FORCEMINIMIZE'   = 11
@@ -39,10 +39,10 @@ param(
         'SHOWNORMAL'      = 1
     }
     
-    $Win32ShowWindowAsync = Add-Type –memberDefinition @” 
+    $Win32ShowWindowAsync = Add-Type -memberDefinition @"
     [DllImport("user32.dll")] 
     public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow); 
-“@ -name “Win32ShowWindowAsync” -namespace Win32Functions –passThru
+"@ -name "Win32ShowWindowAsync" -namespace Win32Functions -passThru
     
     $Win32ShowWindowAsync::ShowWindowAsync($MainWindowHandle, $WindowStates[$Style]) | Out-Null
     Write-Verbose ("Set Window Style '{1} on '{0}'" -f $MainWindowHandle, $Style)
