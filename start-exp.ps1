@@ -1,8 +1,14 @@
+# Used to start emwave, hide it, and then start emwave_pulse.
+# If necessary, change the next two lines to set the location
+# of emwave and emwave_pulse.
+$emwv_loc = "$($env:ProgramFiles)\HeartMath\emWave\emwavepc.exe"
+$emwv_pulse_loc = "$($env:USERPROFILE)\Documents\Release\emwave_pulse_PC_App.exe""
+
+
 # Function to maximize/minimize/hide etc. a given window
 # Modified version of https://gist.github.com/jakeballard/11240204
 # Usage: Set-WindowStyle <Style> <ProcessId>
 # Operates on whatever the MainWindowHandle of ProcessId is
-
 ﻿function Set-WindowStyle {
 param(
     [Parameter()]
@@ -44,7 +50,7 @@ param(
 }
 
 # start emWave, start our app, wait a little for them to fire up, hide emWave
-$emwv = start-process -PassThru "C:\Program Files (x86)\HeartMath\emWave\emwavepc.exe"
-start-process -WindowStyle Maximized -ArgumentList "$($emwv.Id)" "C:\Users\HRVT_7\Documents\Release\emwave_pulse_PC_App.exe"
+$emwv = start-process -PassThru $emwv_loc
+start-process -WindowStyle Maximized -ArgumentList "$($emwv.Id)" "$($emwv_pulse_loc)"
 Start-Sleep 3
 Set-WindowStyle HIDE $emwv.Id
